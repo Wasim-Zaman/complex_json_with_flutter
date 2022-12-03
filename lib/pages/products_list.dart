@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import "../json/products_data.dart";
-import "../json/users_data.dart";
-import "../json/carts_data.dart";
+import '../models/data_model.dart';
 
 class ProductsList extends StatelessWidget {
   const ProductsList({super.key});
@@ -11,9 +10,8 @@ class ProductsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productsData = products;
-    final usersData = users;
-    final cartsData = carts;
+    final productsData =
+        Provider.of<DataModel>(context, listen: false).productsData;
 
     return Column(
       children: [
@@ -35,16 +33,36 @@ class ProductsList extends StatelessWidget {
                   ),
                   backgroundColor: Colors.black54,
                 ),
-                footer: GridTileBar(
-                  title: Text(
-                    "\$${productsData[index]['price']}".toString(),
-                  ),
-                  backgroundColor: Colors.black54,
-                  // trailing: Text(productsData[index]['']),
+                footer: Row(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: FittedBox(
+                          child: Text(
+                            "\$ ${productsData[index]['price']}".toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                child: Image.network(
-                  productsData[index]['image'].toString(),
-                  fit: BoxFit.cover,
+                child: SizedBox(
+                  height: 100,
+                  child: Card(
+                    margin: const EdgeInsets.all(10),
+                    child: Image.network(
+                      productsData[index]['image'].toString(),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               );
             },

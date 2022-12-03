@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 
 import "../pages/products_list.dart";
 import "../pages/users_list.dart";
+import "../pages/carts_page.dart";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,6 +30,10 @@ class _HomePageState extends State<HomePage> {
       {
         "page": const ProductsList(),
         "title": "Products Data",
+      },
+      {
+        "page": CartsPage(),
+        "title": "User Carts",
       },
     ];
     super.initState();
@@ -75,6 +80,11 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.data_object),
             label: "Products Data",
             tooltip: "Products Data",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: "User Carts",
+            tooltip: "User Carts",
           ),
         ],
       ),
