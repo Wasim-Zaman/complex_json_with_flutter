@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../models/data_model.dart';
 
-import 'user_cart_page.dart';
-
 class CartsPage extends StatelessWidget {
   CartsPage({super.key});
 

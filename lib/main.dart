@@ -1,4 +1,3 @@
-import 'package:complex_json_with_flutter/pages/user_cart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +31,6 @@ class MyApp extends StatelessWidget {
           // ignore: equal_keys_in_map
           ProductsList.pageName: (context) => const ProductsList(),
           CartsPage.pageName: (context) => CartsPage(),
-          UserCartPage.pageName: (context) => UserCartPage(),
         },
       ),
     );
