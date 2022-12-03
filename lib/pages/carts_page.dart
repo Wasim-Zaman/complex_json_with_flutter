@@ -47,7 +47,6 @@ class CartsPage extends StatelessWidget {
                   trailing: Text("City: ${userAdd['city']}"),
                 ),
               ),
-              // const SizedBox(height: 10),
               Container(
                 margin: const EdgeInsets.only(
                   left: 10,
@@ -67,8 +66,8 @@ class CartsPage extends StatelessWidget {
                         .firstWhere((product) => product['id'] == prodIdInCart);
 
                     return CartItem(
-                      cartImageUrl: productInCart['image'].toString(),
-                      cartProductPrice: productInCart['price'] as double,
+                      cartImageUrl: productsInCart[index]['image'].toString(),
+                      cartProductPrice: productInCart['price'].toString(),
                       cartProductQuantity: prodQtyInCart,
                       cartProductTitle: productInCart['title'].toString(),
                     );

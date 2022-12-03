@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CartItem extends StatelessWidget {
   final String cartImageUrl;
-  final double cartProductPrice;
+  final String cartProductPrice;
   final int cartProductQuantity;
 
   final String cartProductTitle;
@@ -36,7 +36,7 @@ class CartItem extends StatelessWidget {
           children: [
             Text("Price: \$$cartProductPrice"),
             Text(
-                "Total: \$${cartProductPrice * cartProductQuantity}"), // total price
+                "Total: \$${double.parse(cartProductPrice) * cartProductQuantity}"), // total price
           ],
         ),
       ),
