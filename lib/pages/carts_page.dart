@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../models/data_model.dart';
+import '../widgets/cart_item.dart';
 
 class CartsPage extends StatelessWidget {
-  CartsPage({super.key});
+  const CartsPage({super.key});
 
   static const pageName = '/cart-page';
-  var userCart;
-  var prodsInCart;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +17,6 @@ class CartsPage extends StatelessWidget {
         Provider.of<DataModel>(context, listen: false).productsData;
 
     final cartsData = Provider.of<DataModel>(context, listen: false).cartsData;
-
-    final usersInCart = Provider.of<DataModel>(context, listen: false).UIC;
-    final productsInCart = Provider.of<DataModel>(context, listen: false).PIC;
 
     return SingleChildScrollView(
       child: Column(
@@ -71,29 +66,11 @@ class CartsPage extends StatelessWidget {
                     final productInCart = productsData
                         .firstWhere((product) => product['id'] == prodIdInCart);
 
-                    return Card(
-                      borderOnForeground: true,
-                      elevation: 6,
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 8,
-                      ),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            productInCart['image'].toString(),
-                          ),
-                        ),
-                        title: Text(productInCart['title'].toString()),
-                        subtitle: Text("Quantity: $prodQtyInCart x"),
-                        trailing: Column(
-                          children: [
-                            Text("Price: \$${productInCart['price']}"),
-                            // Text(
-                            //     "Total: \$${productInCart['price'] * prodQtyInCart}"),
-                          ],
-                        ),
-                      ),
+                    return CartItem(
+                      cartImageUrl: productInCart['image'].toString(),
+                      cartProductPrice: productInCart['price'] as double,
+                      cartProductQuantity: prodQtyInCart,
+                      cartProductTitle: productInCart['title'].toString(),
                     );
                   },
                 ),
@@ -103,63 +80,5 @@ class CartsPage extends StatelessWidget {
         }).toList(),
       ),
     );
-
-    // return Column(
-    //   children: [
-    //     Expanded(
-    //       child: ListView.builder(
-    //         itemBuilder: (context, index) {
-    //           /* ####################### User ############################# */
-
-    //           final userId = cartsData[index]['userId'];
-    //           final cartUser =
-    //               cartsData.where((cart) => cart['userId'] == userId).toList();
-
-    //           print(cartUser);
-
-    //           return SingleChildScrollView(
-    //             child: Column(
-    //               children: [
-    //                 InkWell(
-    //                   onTap: () {
-    //                     Navigator.of(context).pushNamed(UserCartPage.pageName);
-    //                   },
-    //                   splashColor: Theme.of(context).primaryColor,
-    //                   child: Card(
-    //                     margin: const EdgeInsets.all(10),
-    //                     elevation: 6,
-    //                     child: Text(cartUser.toString()),
-    //                     // child: ListTile(
-    //                     //   title: Text(
-    //                     //     'User Name: ${userName["firstname"]} ${userName["lastname"]}',
-    //                     //   ),
-    //                     //   subtitle: Text('Email: ${user["email"]}'),
-    //                     //   trailing: Text("City: ${userAddress['city']}"),
-    //                     // ),
-    //                   ),
-    //                 ),
-    //                 // Container(
-    //                 //   // width: double.infinity,
-    //                 //   height: 200,
-    //                 //   color: Colors.amber,
-    //                 //   child: Expanded(
-    //                 //     child: ListView.builder(
-    //                 //       itemCount: productsInCart.length,
-    //                 //       scrollDirection: Axis.horizontal,
-    //                 //       itemBuilder: (ctx, m) => Card(
-    //                 //         child: Text("$m"),
-    //                 //       ),
-    //                 //     ),
-    //                 //   ),
-    //                 // )
-    //               ],
-    //             ),
-    //           );
-    //         },
-    //         itemCount: cartsData.length,
-    //       ),
-    //     ),
-    //   ],
-    // );
   }
 }
