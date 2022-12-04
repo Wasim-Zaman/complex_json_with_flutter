@@ -1,43 +1,68 @@
 import 'package:flutter/material.dart';
 
-class CartItem extends StatelessWidget {
+class CartItemHorizontal extends StatelessWidget {
   final String cartImageUrl;
   final String cartProductPrice;
   final int cartProductQuantity;
-
   final String cartProductTitle;
-
-  const CartItem({
+  const CartItemHorizontal({
+    super.key,
     required this.cartImageUrl,
     required this.cartProductPrice,
     required this.cartProductQuantity,
     required this.cartProductTitle,
-    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      borderOnForeground: true,
-      elevation: 6,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 8,
-      ),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(
-            cartImageUrl,
-          ),
+    // print(cartImageUrl);
+    return GridTile(
+      header: GridTileBar(
+        backgroundColor: Colors.black54,
+        title: Text(
+          cartProductTitle,
+          textAlign: TextAlign.center,
         ),
-        title: Text(cartProductTitle),
-        subtitle: Text("Quantity: $cartProductQuantity x"),
-        trailing: Column(
+      ),
+      footer: GridTileBar(
+        backgroundColor: Colors.black54,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Price: \$$cartProductPrice"),
-            Text(
-                "Total: \$${double.parse(cartProductPrice) * cartProductQuantity}"), // total price
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("Price"),
+                Text("\$$cartProductPrice"),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("Quantity"),
+                Text("$cartProductQuantity"),
+              ],
+            ),
+            Column(
+              children: [
+                const Text("Total"),
+                Text(
+                    "\$${double.parse(cartProductPrice) * cartProductQuantity}"),
+              ],
+            ),
           ],
+        ),
+      ),
+      child: Card(
+        elevation: 5,
+        child: Image.network(
+          cartImageUrl,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return const Center(
+              child: Text("Image not found !"),
+            );
+          },
         ),
       ),
     );
