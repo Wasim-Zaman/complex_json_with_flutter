@@ -38,13 +38,28 @@ class CartsPage extends StatelessWidget {
 
           return Column(
             children: [
-              Card(
-                margin: const EdgeInsets.all(10),
-                child: ListTile(
-                  title:
-                      Text("${userName['firstname']} ${userName['lastname']}"),
-                  subtitle: Text(userCart['email'].toString()),
-                  trailing: Text("City: ${userAdd['city']}"),
+              ListTile(
+                title: Text(
+                  "${userName['firstname']} ${userName['lastname']}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+                subtitle: Text(
+                  userCart['email'].toString(),
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                trailing: Chip(
+                  label: Text(
+                    "City: ${userAdd['city']}",
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  backgroundColor: Theme.of(context).primaryColorLight,
                 ),
               ),
               Container(
@@ -53,10 +68,15 @@ class CartsPage extends StatelessWidget {
                   right: 10,
                   bottom: 30,
                 ),
-                height: 200,
+                height: 300,
+                // width: double.infinity,
                 color: Colors.grey[300],
-                child: ListView.builder(
-                  itemCount: productsInCart.length,
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    // childAspectRatio: 2 / 3,
+                    mainAxisSpacing: 10,
+                  ),
                   itemBuilder: (context, index) {
                     final prodIdInCart = productsInCart[index]['productId'];
                     final prodQtyInCart =
@@ -65,13 +85,15 @@ class CartsPage extends StatelessWidget {
                     final productInCart = productsData
                         .firstWhere((product) => product['id'] == prodIdInCart);
 
-                    return CartItem(
-                      cartImageUrl: productsInCart[index]['image'].toString(),
+                    return CartItemHorizontal(
+                      cartImageUrl: productInCart['image'].toString(),
                       cartProductPrice: productInCart['price'].toString(),
                       cartProductQuantity: prodQtyInCart,
                       cartProductTitle: productInCart['title'].toString(),
                     );
                   },
+                  itemCount: productsInCart.length,
+                  scrollDirection: Axis.horizontal,
                 ),
               ),
             ],
